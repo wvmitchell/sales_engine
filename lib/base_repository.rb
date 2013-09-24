@@ -24,7 +24,7 @@ class BaseRepository
   def clean_hash(hash)
     new_hash = {}
     hash.each do |key, value|
-      new_hash[key] = value.to_s  
+      new_hash[key] = "#{value}"
     end
     new_hash
   end
@@ -38,6 +38,7 @@ class BaseRepository
   end
 
   def create_csv_object
-    CSV.open default_filename, "r", headers: true, header_converters: :symbol
+    CSV.read default_filename, "r", headers: true, header_converters: :symbol 
+
   end
 end
