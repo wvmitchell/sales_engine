@@ -17,12 +17,11 @@ class BaseRepository
 
   def create_collection
     create_csv_object.collect do  |row|
-      class_type.new(clean_row row)
+      class_type.new(clean_hash row.to_hash)
     end  
   end
 
-  def clean_row(row)
-    hash = row.to_hash
+  def clean_hash(hash)
     new_hash = {}
     hash.each do |key, value|
       new_hash[key] = value.to_s  
