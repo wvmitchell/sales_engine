@@ -8,11 +8,17 @@ require 'csv'
 
 class BaseRepository
 
-  attr_accessor :collection_array, :class_type, :default_filename
+  attr_accessor :collection_array, :class_type, :default_filename, :attributes
 
   def initialize(class_type)
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
     @collection_array = create_collection
+
+    attributes.each do |attribute| 
+      self.class.send(:define_method, "find_by_#{attribute}") do |match|
+       	@collection_array.find { |item| item.send(attribute) ==  match }
+      end
+    end      
   end
 
   def create_collection
@@ -40,4 +46,9 @@ class BaseRepository
   def create_csv_object
     CSV.read default_filename, "r", headers: true, header_converters: :symbol 
   end
+
+  def attributes
+    @attributes ||= create_csv_object.headers
+  end
+
 end

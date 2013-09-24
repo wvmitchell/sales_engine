@@ -3,7 +3,7 @@ class BaseUnit
   def initialize(data={})
     data.keys.each do |key|
       if BaseUnit.valid_methods.include?(key)
-        self.class.send(:define_method,key.to_s) { data[key]}
+        self.class.send(:define_method,key.to_s) {data[key]}
       end
     end  
   end

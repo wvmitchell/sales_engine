@@ -24,4 +24,15 @@ class CustomerRepositoryTest < MiniTest::Unit::TestCase
     cr.collection_array.each { |customer|  assert_kind_of Customer, customer }
   end
 
+  def test_has_find_by_id_method
+    assert cr.methods.include?(:find_by_id)
+  end
+
+  def test_has_find_by_first_name_method
+    assert cr.methods.include?(:find_by_first_name)
+  end
+
+  def test_has_find_by_last_name_method
+    assert cr.methods.include?(:find_by_last_name)
+  end
 end
