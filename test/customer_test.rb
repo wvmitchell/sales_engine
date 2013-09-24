@@ -10,8 +10,6 @@ class CustomerTest < MiniTest::Unit::TestCase
     data =  { id: 1,
     first_name: "George",
     last_name: "Washington",
-    created_at: "2012-03-27 14:54:09 UTC",
-    updated_at: "2012-03-27 14:54:09 UTC"
     }
     @cust = Customer.new(data)
   end
@@ -32,11 +30,4 @@ class CustomerTest < MiniTest::Unit::TestCase
     assert_equal "Washington", cust.last_name
   end
 
-  def test_it_responds_to_created_at
-    assert_kind_of DateTime, cust.created_at
-  end
-
-  def test_it_responds_to_updated_at
-    assert_kind_of DateTime, cust.updated_at
-  end
 end

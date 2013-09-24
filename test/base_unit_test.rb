@@ -21,5 +21,12 @@ class BaseUnitTest < MiniTest::Unit::TestCase
 
   def test_it_has_created_instance_methods
     assert bu.methods.include?(:id)
-  end  
+  end
+
+  def test_it_can_not_create_bad_instance_methods
+    data = {id: 2, spam: "I'm spam"}
+    bu2 = BaseUnit.new(data)
+    refute bu2.methods.include?(:spam)
+  end
+  
 end
