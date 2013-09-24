@@ -23,5 +23,16 @@ class InvoiceTest < MiniTest::Unit::TestCase
   def test_id_is_set
     assert_equal 1, inv.id 
   end
+  
+  def test_customer_id_is_set
+    assert_equal 21, inv.customer_id
+  end
 
+  def test_merchant_id_is_set
+    assert_equal 26, inv.merchant_id
+  end
+
+  def test_status_is_set
+    assert_equal 'shipped', inv.status
+  end
 end
