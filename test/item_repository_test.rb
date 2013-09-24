@@ -7,7 +7,7 @@ class ItemRepositoryTest< MiniTest::Unit::TestCase
   attr_reader :ir
 
   def setup
-    @ir = ItemRepository.new
+    @ir = ItemRepository.new(Item)
   end
 
   def test_it_exists

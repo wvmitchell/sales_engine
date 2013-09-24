@@ -14,26 +14,26 @@ class SalesEngine
   end
 
   def merchant_repository
-    @merchant_repository ||= MerchantRepository.new 
+    @merchant_repository ||= MerchantRepository.new(Merchant) 
   end
 
   def invoice_repository
-    @invoice_repository ||= InvoiceRepository.new
+    @invoice_repository ||= InvoiceRepository.new(Invoice)
   end
 
   def item_repository
-    @item_repository ||= ItemRepository.new
+    @item_repository ||= ItemRepository.new(Item)
   end
 
   def invoice_item_repository
-    @invoice_item_repository ||= InvoiceItemRepository.new
+    @invoice_item_repository ||= InvoiceItemRepository.new(InvoiceItem)
   end
 
   def customer_repository
-    @customer_repository ||= CustomerRepository.new
+    @customer_repository ||= CustomerRepository.new(Customer)
   end
 
   def transaction_repository
-    @transaction_repository ||= TransactionRepository.new
+    @transaction_repository ||= TransactionRepository.new(Transaction)
   end
 end

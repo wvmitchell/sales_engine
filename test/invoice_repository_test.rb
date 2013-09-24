@@ -8,7 +8,7 @@ class InvoiceRepositoryTest < MiniTest::Unit::TestCase
   attr_reader :ir
 
   def setup
-    @ir = InvoiceRepository.new
+    @ir = InvoiceRepository.new(Invoice)
   end
 
   def test_it_exists

@@ -2,13 +2,14 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/customer_repository'
+require_relative '../lib/customer'
 
 class CustomerRepositoryTest < MiniTest::Unit::TestCase
 
   attr_reader :cr
 
   def setup
-    @cr = CustomerRepository.new
+    @cr = CustomerRepository.new(Customer)
   end
 
   def test_it_exists

@@ -10,7 +10,7 @@ class MerchantRepositoryTest < MiniTest::Unit::TestCase
   attr_reader :mr
 
   def setup
-    @mr = MerchantRepository.new
+    @mr = MerchantRepository.new(Merchant)
   end
 
   def test_it_exists

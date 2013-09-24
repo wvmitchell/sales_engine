@@ -11,14 +11,23 @@ class BaseRepository
   attr_accessor :collection_array, :class_type, :default_filename
 
   def initialize(class_type)
-    @collection_array = create_collection
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
+    @collection_array = create_collection
   end
 
   def create_collection
     create_csv_object.collect do  |row|
-      @class_type.new(row.to_hash)
+      class_type.new(clean_row row)
     end  
+  end
+
+  def clean_row(row)
+    hash = row.to_hash
+    new_hash = {}
+    hash.each do |key, value|
+      new_hash[key] = value.to_s  
+    end
+    new_hash
   end
 
   def valid?(class_type)

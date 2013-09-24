@@ -8,7 +8,7 @@ class TransactionRepositoryTest < MiniTest::Unit::TestCase
   attr_reader :tr
 
   def setup
-    @tr = TransactionRepository.new 
+    @tr = TransactionRepository.new(Transaction) 
   end
 
   def test_it_exists

@@ -12,7 +12,7 @@ class CustomerRepository < BaseRepository
   #end
 
   def default_filename
-    'customers.csv'
+    './data/customers.csv'
   end
 
 end
