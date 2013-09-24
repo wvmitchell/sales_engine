@@ -4,22 +4,21 @@ require_relative 'invoice_item'
 require_relative 'item'
 require_relative 'merchant'
 require_relative 'transaction'
+require 'csv'
 
 class BaseRepository
 
-  attr_accessor :collection_array, :class_type
+  attr_accessor :collection_array, :class_type, :default_filename
 
   def initialize(class_type)
     @collection_array = create_collection
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
   end
 
-  def default_filename
-    ""
-  end
-
   def create_collection
-
+    create_csv_object.collect do  |row|
+      @class_type.new(row.to_hash)
+    end  
   end
 
   def valid?(class_type)
@@ -30,4 +29,7 @@ class BaseRepository
     raise "Sorry, there is not #{class_type}Repository class" 
   end
 
+  def create_csv_object
+    CSV.open default_filename, "r", headers: true, header_converters: :symbol
+  end
 end

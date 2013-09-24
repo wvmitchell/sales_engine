@@ -7,7 +7,7 @@ require_relative '../lib/customer'
 class BaseRepositoryTest < MiniTest::Unit::TestCase
 
   attr_reader :br
-
+=begin  
   def setup
     @br = BaseRepository.new(Customer)
   end
@@ -24,4 +24,9 @@ class BaseRepositoryTest < MiniTest::Unit::TestCase
     assert_raises(RuntimeError) {BaseRepository.new(Array)}
   end
 
+  def test_class_csv_object_is_created
+    br.default_filename = "./data/customers.csv"
+    assert_kind_of CSV, br.create_csv_object
+  end
+=end  
 end
