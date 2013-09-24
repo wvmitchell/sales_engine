@@ -17,7 +17,7 @@ class BaseRepository
 
   def create_collection
     create_csv_object.collect do  |row|
-      class_type.new(clean_hash row.to_hash)
+      class_type.new(row.to_hash)
     end  
   end
 
@@ -38,6 +38,6 @@ class BaseRepository
   end
 
   def create_csv_object
-    CSV.open default_filename, "r", headers: true, header_converters: :symbol
+    CSV.read default_filename, "r", headers: true, header_converters: :symbol
   end
 end

@@ -3,7 +3,7 @@ require_relative 'base_repository'
 
 class TransactionRepository < BaseRepository
   
-  def default_file
+  def default_filename
     './data/transactions.csv'
   end
 
