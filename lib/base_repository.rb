@@ -20,7 +20,7 @@ class BaseRepository
 
   def create_collection
     create_csv_object.map do |row|
-      data = clean_hash row.to_hash
+      data = row.to_hash
       data[:sales_engine_reference] = sales_engine_reference
       class_type.new(data)
     end 
@@ -49,7 +49,7 @@ class BaseRepository
   def clean_hash(hash)
     new_hash = {}
     hash.each do |key, value|
-      new_hash[key] = value.to_s
+     value.nil? ? new_hash[key] = value : value.to_s
     end
     new_hash
   end
