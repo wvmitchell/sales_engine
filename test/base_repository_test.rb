@@ -7,6 +7,8 @@ require_relative '../lib/customer'
 class BaseRepositoryTest < MiniTest::Unit::TestCase
 
   attr_reader :br
+
+  
 =begin  
   def setup
     @br = BaseRepository.new(Customer)
