@@ -4,8 +4,8 @@ require_relative 'invoice_item'
 require_relative 'item'
 require_relative 'merchant'
 require_relative 'transaction'
-require 'pry'
 require 'csv'
+
 class BaseRepository
 
   attr_accessor :collection_array, :class_type, :default_filename, :attributes, :csv_obj, :sales_engine_reference
