@@ -104,4 +104,43 @@ class SalesEngineTest < MiniTest::Unit::TestCase
       assert_equal se, merchant.sales_engine_reference
     end
   end
+
+  def test_it_is_passed_to_the_customer
+    se.customer_repository
+    se.customer_repository.collection_array.each do |customer|
+      assert_equal se, customer.sales_engine_reference
+    end
+  end
+
+  def test_it_is_passed_to_invoice
+    se.invoice_repository
+    se.invoice_repository.collection_array.each do |invoice|
+      assert_equal se, invoice.sales_engine_reference
+    end
+  end
+
+  def test_it_is_passed_to_invoice_item
+    #se.invoice_item_repository
+
+    #se.invoice_item_repository.collection_array.each do |invoice_item|
+    #  assert_equal se, invoice_item.sales_engine_reference
+    #end
+  end
+
+  def test_it_is_passed_to_item
+    se.item_repository
+
+    se.item_repository.collection_array.each do |item|
+      assert_equal se, item.sales_engine_reference
+    end
+  end
+
+  def test_it_is_passed_to_transaction
+    se.transaction_repository
+
+    se.transaction_repository.collection_array.each do |transaction|
+      assert_equal se, transaction.sales_engine_reference
+    end
+  end
+
 end
