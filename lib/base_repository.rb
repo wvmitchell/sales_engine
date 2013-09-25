@@ -12,27 +12,35 @@ class BaseRepository
   def initialize(class_type)
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
     #@collection_array = create_collection
-    create_collection
+    @collection_array = create_collection
+    define_find_by_methods
+    define_find_by_all_methods
+  end
 
+  def create_collection
+    create_csv_object.map do |row|
+      class_type.new(clean_hash row.to_hash)
+    end 
+  end
+
+  def define_find_by_methods
     attributes.each do |attribute| 
       self.class.send(:define_method, "find_by_#{attribute}") do |match|
-       	collection_array.find { |item| item.send("#{attribute}").downcase ==  match.downcase }
+        collection_array.find { |item| item.instance_variable_get("@#{attribute}").downcase ==  match.to_s.downcase }
       end
     end      
   end
 
-  def create_collection
-    @collection_array = create_csv_object.map do |row|
-      class_type.new(row.to_hash)
+  def define_find_by_all_methods
+    attributes.each do |attribute| 
+      self.class.send(:define_method, "find_all_by_#{attribute}") do |match|
+        collection_array.find_all { |item| item.instance_variable_get("@#{attribute}").downcase ==  match.to_s.downcase }
+      end
     end 
   end
 
-  def create_collection_from_array(array)
-    arr = []
-    array.each do |item|
-      arr << class_type.new(item)
-    end
-    arr
+  def random
+    collection_array[rand(collection_array.count-1)]
   end
 
   def clean_hash(hash)

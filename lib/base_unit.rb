@@ -4,6 +4,7 @@ class BaseUnit
     data.keys.each do |key|
       if BaseUnit.valid_methods.include?(key)
         self.instance_variable_set( "@#{key.to_s}", data[key] )
+        BaseUnit.send(:define_method, "#{key.to_s}") { self.instance_variable_get("@#{key.to_s}")}
       end
     end
   end
