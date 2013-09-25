@@ -7,12 +7,13 @@ require_relative 'transaction'
 require 'csv'
 class BaseRepository
 
-  attr_accessor :collection_array, :class_type, :default_filename, :attributes, :csv_obj
+  attr_accessor :collection_array, :class_type, :default_filename, :attributes, :csv_obj, :sales_engine_reference
 
-  def initialize(class_type)
+  def initialize(class_type, sales_engine=nil)
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
     #@collection_array = create_collection
     @collection_array = create_collection
+    @sales_engine_reference = sales_engine
     define_find_by_methods
     define_find_by_all_methods
   end
