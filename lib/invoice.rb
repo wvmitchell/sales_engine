@@ -9,4 +9,7 @@ class Invoice < BaseUnit
     end
   end
  
+  def invoice_items
+    [InvoiceItem.new]
+  end
 end
