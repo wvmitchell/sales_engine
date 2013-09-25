@@ -55,4 +55,5 @@ class CustomerRepositoryTest < MiniTest::Unit::TestCase
     cr2 = CustomerRepository.new(Customer, SalesEngine.new)
     assert_kind_of SalesEngine, cr2.sales_engine_reference
   end
+
 end

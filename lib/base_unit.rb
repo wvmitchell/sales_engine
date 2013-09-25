@@ -1,5 +1,7 @@
 class BaseUnit
 
+  attr_reader :sales_engine_reference
+
   def initialize(data={})
     data.keys.each do |key|
       if BaseUnit.valid_methods.include?(key)
@@ -12,7 +14,7 @@ class BaseUnit
   def self.valid_methods
     [:id, :first_name, :last_name, :created_at, :updated_at, :item_id, :invoice_id, :quantity, :unit_price,
      :customer_id, :merchant_id, :status, :name, :description, :credit_card_number, :credit_card_expiration_date,
-     :result]
+     :result, :sales_engine_reference]
   end
 end
 

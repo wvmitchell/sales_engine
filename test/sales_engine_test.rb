@@ -67,4 +67,41 @@ class SalesEngineTest < MiniTest::Unit::TestCase
   def test_it_does_return_a_transaction_repository_instance
     assert_kind_of TransactionRepository, @se.transaction_repository
   end
+
+  def test_it_is_passed_to_merchant_repository
+    se.merchant_repository
+    assert_equal se, se.merchant_repository.sales_engine_reference
+  end
+
+  def test_it_is_passed_to_customer_repository
+    se.customer_repository
+    assert_equal se, se.customer_repository.sales_engine_reference
+  end
+
+  def test_it_is_passed_to_invoice_repository
+    se.invoice_repository
+    assert_equal se, se.invoice_repository.sales_engine_reference
+  end
+
+  def test_it_is_passed_to_item_repository
+    se.item_repository
+    assert_equal se, se.item_repository.sales_engine_reference
+  end
+
+  def test_it_is_passed_to_invoice_item_repository
+    se.invoice_item_repository
+    assert_equal se, se.invoice_item_repository.sales_engine_reference
+  end
+
+  def test_it_is_passed_to_transaction_repository
+    se.transaction_repository
+    assert_equal se, se.transaction_repository.sales_engine_reference
+  end
+
+  def test_it_is_passed_to_the_merchant
+    se.merchant_repository
+    se.merchant_repository.collection_array.each do |merchant|
+      assert_equal se, merchant.sales_engine_reference
+    end
+  end
 end

@@ -4,6 +4,7 @@ require_relative 'invoice_item'
 require_relative 'item'
 require_relative 'merchant'
 require_relative 'transaction'
+require 'pry'
 require 'csv'
 class BaseRepository
 
@@ -11,16 +12,17 @@ class BaseRepository
 
   def initialize(class_type, sales_engine=nil)
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
-    #@collection_array = create_collection
-    @collection_array = create_collection
     @sales_engine_reference = sales_engine
+    @collection_array = create_collection
     define_find_by_methods
     define_find_by_all_methods
   end
 
   def create_collection
     create_csv_object.map do |row|
-      class_type.new(clean_hash row.to_hash)
+      data = clean_hash row.to_hash
+      data[:sales_engine_reference] = sales_engine_reference
+      class_type.new(data)
     end 
   end
 
