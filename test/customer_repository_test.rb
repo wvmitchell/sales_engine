@@ -28,10 +28,6 @@ class CustomerRepositoryTest < MiniTest::Unit::TestCase
     assert cr.methods.include?(:find_by_id)
   end
 
-  :wq
-  :
-  end
-
   def test_has_find_by_last_name_method
     assert cr.methods.include?(:find_by_last_name)
   end

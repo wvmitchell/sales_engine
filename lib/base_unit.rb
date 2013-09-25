@@ -1,26 +1,12 @@
 class BaseUnit
 
-  def initialize(data={})
+#  def initialize(data={})
    # data.keys.each do |key|
     #  if BaseUnit.valid_methods.include?(key)
     #    self.class.send(:define_method,key.to_s) {data[key]}
    #   end
   #  end  
  # end
-    data.each do |name, val|
-      def create_method( name, &block )
-        self.class.send( :define_method, name, &block )
-      end
-    
-      def create_attr( name )
-	create_method( "#{name}=".to_sym ) { |val| 
-          instance_variable_set( "@" + name, val)
-       	}
-		  
-        create_method( name.to_sym ) { 
-            instance_variable_get( "@" + name ) 
-        }
-    end.
   def self.valid_methods
     [:id, :first_name, :last_name, :created_at, :updated_at, :item_id, :invoice_id, :quantity, :unit_price,
      :customer_id, :merchant_id, :status, :name, :description, :credit_card_number, :credit_card_expiration_date,
