@@ -120,11 +120,11 @@ class SalesEngineTest < MiniTest::Unit::TestCase
   end
 
   def test_it_is_passed_to_invoice_item
-    #se.invoice_item_repository
+    se.invoice_item_repository
 
-    #se.invoice_item_repository.collection_array.each do |invoice_item|
-    #  assert_equal se, invoice_item.sales_engine_reference
-    #end
+    se.invoice_item_repository.collection_array.each do |invoice_item|
+      assert_equal se, invoice_item.sales_engine_reference
+    end
   end
 
   def test_it_is_passed_to_item
