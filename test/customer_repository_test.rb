@@ -50,4 +50,9 @@ class CustomerRepositoryTest < MiniTest::Unit::TestCase
     cust2 = cr.random
     refute_equal cust1, cust2
   end
+
+  def test_repository_does_hold_reference_to_sales_engine
+    cr2 = CustomerRepository.new(Customer, SalesEngine.new)
+    assert_kind_of SalesEngine, cr2.sales_engine_reference
+  end
 end

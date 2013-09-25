@@ -23,4 +23,27 @@ class InvoiceItemRepositoryTest < MiniTest::Unit::TestCase
     iir.collection_array.each {|ii| assert_kind_of InvoiceItem, ii}
   end
 
+  def test_has_find_by_item_id
+    assert iir.methods.include?(:find_by_item_id)
+  end
+
+  def test_has_find_all_by_item_id
+    assert iir.methods.include?(:find_all_by_item_id)
+  end
+
+  def test_has_random_method
+    assert iir.methods.include?(:random)
+  end
+
+  def test_random_does_return_an_invoice_item
+    ii1 = iir.random
+    assert_kind_of InvoiceItem, ii1
+  end
+
+  def test_random_returns_a_random_customer
+    ii1 = iir.random
+    ii2 = iir.random
+    refute_equal ii1, ii2
+  end
+
 end
