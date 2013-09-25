@@ -5,37 +5,40 @@ require_relative 'item'
 require_relative 'merchant'
 require_relative 'transaction'
 require 'csv'
-
 class BaseRepository
 
   attr_accessor :collection_array, :class_type, :default_filename, :attributes, :csv_obj
 
   def initialize(class_type)
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
-    @collection_array = create_collection
-    build_methods
-  end
+    #@collection_array = create_collection
+    create_collection
 
-  def build_methods
     attributes.each do |attribute| 
-      self.class.send(:define_method,"find_by_#{attribute}") do |match|
-       	collection_array.find { |item| item.send(attribute) ==  match
-	 puts "#{item.send(attribute)} == #{match}" }
+      self.class.send(:define_method, "find_by_#{attribute}") do |match|
+       	collection_array.find { |item| item.send("#{attribute}").downcase ==  match.downcase }
       end
     end      
   end
 
   def create_collection
-    create_csv_object
-    csv_obj.collect do  |row|
+    @collection_array = create_csv_object.map do |row|
       class_type.new(row.to_hash)
-    end  
+    end 
+  end
+
+  def create_collection_from_array(array)
+    arr = []
+    array.each do |item|
+      arr << class_type.new(item)
+    end
+    arr
   end
 
   def clean_hash(hash)
     new_hash = {}
     hash.each do |key, value|
-      new_hash[key] = "#{value}"
+      new_hash[key] = value.to_s
     end
     new_hash
   end
