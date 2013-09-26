@@ -86,7 +86,7 @@ class InvoiceTest < MiniTest::Unit::TestCase
 
   def test_method_invoice_items_match_invoice_id
     inv.invoice_items.each do |invoice_item|
-      assert_equal inv.id, invoice_items.invoice_id
+      assert_equal inv.id, invoice_item.invoice_id
     end
   end
 end

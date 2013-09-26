@@ -10,6 +10,8 @@ class Invoice < BaseUnit
   end
  
   def invoice_items
-    [InvoiceItem.new]
+    sales_engine_reference.invoice_item_repository.collection_array.select do |invoice_item|
+      invoice_item.invoice_id == id
+    end
   end
 end
