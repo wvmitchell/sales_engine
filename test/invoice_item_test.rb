@@ -2,18 +2,25 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/invoice_item'
+require './lib/invoice'
+require './lib/sales_engine'
 
 class InvoiceItemTest < MiniTest::Unit::TestCase
   
   attr_reader :ii
 
   def setup
-    data = {id: 1,
-	    item_id: 12,
-	    invoice_id: 13,
-	    quantity: 44,
-	    unit_price: 100
+    se = SalesEngine.new
+    se.invoice_repository
+    se.item_repository
+    data = {id: "1",
+	    item_id: '539',
+	    invoice_id: '1',
+	    quantity: '5',
+	    unit_price: '13635',
+	    sales_engine_reference: se
     }
+
     @ii = InvoiceItem.new(data)
   end
 
@@ -22,22 +29,46 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
   end
   
   def test_id_is_set
-    assert_equal 1, ii.id
+    assert_equal "1", ii.id
   end
 
   def test_item_id_is_set
-    assert_equal 12, ii.item_id
+    assert_equal '539', ii.item_id
   end
 
   def test_invoice_id_is_set
-    assert_equal 13, ii.invoice_id
+    assert_equal '1', ii.invoice_id
   end
 
   def test_quantity_is_set
-    assert_equal 44, ii.quantity
+    assert_equal '5', ii.quantity
   end
 
   def test_unit_price_is_set
-    assert_equal 100, ii.unit_price
+    assert_equal '13635', ii.unit_price
+  end
+
+  def test_method_invoice_exists
+    assert ii.methods.include?(:invoice)
+  end  
+
+  def test_method_invoice_returns_invoice
+    assert_kind_of Invoice, ii.invoice
+  end
+
+  def test_method_invoice_matches_invoice_id
+    assert_equal ii.invoice_id, ii.invoice.id
+  end
+
+  def test_method_item_exists
+    assert ii.methods.include?(:item)
+  end  
+  
+  def test_item_returns_item
+    assert_kind_of Item, ii.item
+  end
+
+  def test_method_item_matches_item_id
+    assert_equal ii.item_id, ii.item.id
   end
 end
