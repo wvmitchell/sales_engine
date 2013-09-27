@@ -2,7 +2,7 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/invoice'
-require './lib/sales_engine'
+require_relative '../lib/sales_engine'
 require_relative '../lib/invoice_item'
 
 class InvoiceTest < MiniTest::Unit::TestCase
@@ -14,8 +14,8 @@ class InvoiceTest < MiniTest::Unit::TestCase
     se.transaction_repository
     se.invoice_item_repository
     data =  { id: '1',
-    customer_id: '21',
-    merchant_id: '26',
+    customer_id: '2',
+    merchant_id: '2',
     status: 'shipped',
     sales_engine_reference: se 
     }
@@ -31,11 +31,11 @@ class InvoiceTest < MiniTest::Unit::TestCase
   end
   
   def test_customer_id_is_set
-    assert_equal '21', inv.customer_id
+    assert_equal '2', inv.customer_id
   end
 
   def test_merchant_id_is_set
-    assert_equal '26', inv.merchant_id
+    assert_equal '2', inv.merchant_id
   end
 
   def test_status_is_set
@@ -88,5 +88,52 @@ class InvoiceTest < MiniTest::Unit::TestCase
     inv.invoice_items.each do |invoice_item|
       assert_equal inv.id, invoice_item.invoice_id
     end
+  end
+
+  def test_method_items_exists
+    assert inv.methods.include?(:items)
+  end
+
+  def test_method_items_returns_an_array
+    assert_kind_of Array, inv.items 
+  end
+
+  def test_method_items_is_not_empty
+    skip
+    refute inv.items.empty?
+  end
+
+  def test_items_method_returns_array_of_items
+    inv.items.each do |item|
+      assert_kind_of Item, item
+    end
+  end
+
+  def test_invoice_items_ids_returns_an_array
+    assert_kind_of Array, inv.invoice_items_ids
+  end
+
+  def test_customer_method_exists
+    assert inv.methods.include?(:customer)
+  end
+
+  def test_customer_method_returns_a_customer_type
+    assert_kind_of Customer, inv.customer
+  end
+
+  def test_customer_method_returns_customer_with_id_equal_to_customer_id_on_invoice
+    assert_equal inv.customer_id, inv.customer.id 
+  end
+  
+  def test_merchant_method_exists
+    assert inv.methods.include?(:merchant)
+  end
+
+  def test_merchant_method_returns_merchant_type
+    assert_kind_of Merchant, inv.merchant
+  end
+
+  def test_merchant_method_returns_merchant_with_id_equal_to_merchant_id_on_invoice
+    assert_equal inv.merchant_id, inv.merchant.id
   end
 end
