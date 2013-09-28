@@ -14,7 +14,7 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
     se.invoice_repository
     se.item_repository
     data = {id: "1",
-	    item_id: '539',
+	    item_id: '2',
 	    invoice_id: '1',
 	    quantity: '5',
 	    unit_price: '13635',
@@ -33,7 +33,7 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
   end
 
   def test_item_id_is_set
-    assert_equal '539', ii.item_id
+    assert_equal '2', ii.item_id
   end
 
   def test_invoice_id_is_set

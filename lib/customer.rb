@@ -7,4 +7,9 @@ class Customer < BaseUnit
     DateTime.parse(time)
   end
 
+  def invoices
+    sales_engine_reference.invoice_repository.collection_array.select do |invoice|
+      invoice.customer_id == id
+    end
+  end
 end
