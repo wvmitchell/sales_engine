@@ -41,7 +41,7 @@ class MerchantTest < MiniTest::Unit::TestCase
   end
 
   def test_items_is_not_empty
-      skip
+    skip
     refute m.items.empty?
   end
 
@@ -66,7 +66,7 @@ class MerchantTest < MiniTest::Unit::TestCase
   end
 
   def test_invoices_is_not_empty
-  skip
+    skip
     refute m.invoices.empty?
   end
 

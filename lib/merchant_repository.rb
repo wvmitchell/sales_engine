@@ -9,10 +9,18 @@ class MerchantRepository < BaseRepository
   end
 
   def most_revenue(number_of_results = 1)
-    sort_merchants[0,number_of_results]
+    sort_merchants.take(number_of_results)
+  end
+
+  def most_items(number_of_results = 1)
+    sort_merchants_by_items_sold.take(number_of_results)
   end
 
   def sort_merchants
     collection_array.sort_by {|merchant| merchant.revenue}.reverse
+  end
+
+  def sort_merchants_by_items_sold
+    collection_array.sort_by {|merchant| merchant.total_items_sold}.reverse
   end
 end

@@ -102,4 +102,23 @@ class MerchantRepositoryTest < MiniTest::Unit::TestCase
       assert merchant.revenue >= sorted_merchants[index+1].revenue unless index+1 == sorted_merchants.count
     end
   end
+
+  def test_method_most_items_exists
+    assert merchant_repository.methods.include?(:most_items)
+  end
+
+  def test_method_most_items_returns_an_array
+    assert_kind_of Array, merchant_repository.most_items
+  end
+
+  def test_method_most_items_returns_requested_number_of_results
+    assert_equal 10, merchant_repository.most_items(10).count
+  end
+
+  def test_method_most_items_returns_merchants_sorted_by_total_items_sold
+    sorted_merchants = merchant_repository.sort_merchants_by_items_sold
+    sorted_merchants.each_with_index do |merchant, index|
+      assert merchant.total_items_sold >= sorted_merchants[index+1].total_items_sold unless index+1 == sorted_merchants.count
+    end
+  end
 end
