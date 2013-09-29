@@ -38,4 +38,9 @@ class Invoice < BaseUnit
     end
   end
 
+  def revenue_per_invoice
+    invoice_items.inject(0) do |sum, invoice_item| 
+      sum + invoice_item.unit_price.to_i 
+    end
+  end
 end

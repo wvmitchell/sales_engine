@@ -15,4 +15,10 @@ class Merchant < BaseUnit
       item.merchant_id == id
     end
   end
+
+  def revenue
+    invoices.inject(0) do |sum, invoice|
+      sum + invoice.revenue_per_invoice
+    end
+  end
 end

@@ -136,4 +136,12 @@ class InvoiceTest < MiniTest::Unit::TestCase
   def test_merchant_method_returns_merchant_with_id_equal_to_merchant_id_on_invoice
     assert_equal inv.merchant_id, inv.merchant.id
   end
+
+  def test_revenue_per_invoice_method_exists
+    assert inv.methods.include?(:revenue_per_invoice), "No revenue_per_invoice method defined"
+  end
+
+  def test_revenue_per_invoice_method_returns_fixnum
+    assert_kind_of Fixnum, inv.revenue_per_invoice
+  end
 end

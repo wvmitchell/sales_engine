@@ -10,7 +10,12 @@ class SalesEngine
   def initialize(data='./data')
   end
   def startup
-
+    merchant_repository
+    invoice_repository
+    item_repository
+    invoice_item_repository
+    customer_repository
+    transaction_repository
   end
 
   def merchant_repository
