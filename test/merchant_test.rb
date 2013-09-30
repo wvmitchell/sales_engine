@@ -123,4 +123,28 @@ class MerchantTest < MiniTest::Unit::TestCase
   def test_customer_id_exists_within_merchant_invoices
     assert m.invoices.collect {|invoice| invoice.customer_id }.include?(m.favorite_customer.id)
   end 
+  
+  def test_favorite_customer_returns_customer_with_max_transaction
+    customer_visits =  m.invoices.each_with_object(Hash.new(0)) do |inv, hash_count|
+      hash_count[inv.customer_id] += 1
+    end
+
+    customer_id = customer_visits.max_by { |cust, vi| vi }.first
+
+    assert_equal customer_id, m.favorite_customer.id
+  end  
+
+  def test_customers_with_pending_invoices_method_exists
+    assert m.methods.include?(:customers_with_pending_invoices)
+  end  
+
+  def test_customers_with_pending_invoices_returns_array
+    assert_kind_of Array, m.customers_with_pending_invoices
+  end
+
+  def test_customers_with_pending_invoices_returns_array_of_customers
+    m.customers_with_pending_invoices.each do |customer|
+      assert_kind_of Customer, customer
+    end
+  end
 end

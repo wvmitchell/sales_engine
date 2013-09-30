@@ -43,6 +43,19 @@ class Merchant < BaseUnit
   end
 
   def favorite_customer
-    Customer.new(id: '4')
+    customer_id = customer_visits.max_by { |cust, vi| vi }.first
+    sales_engine_reference.customer_repository.find_by_id(customer_id)
+  end
+
+  def customer_visits
+    invoices.each_with_object(Hash.new(0)) do |invoice, hash_count|
+      hash_count[invoice.customer_id] += 1
+    end
+  end
+
+  def customers_with_pending_invoices
+    invoices.collect do |inv|
+      sales_engine_reference.customer_repository.find_by_id(inv.customer_id)
+    end
   end
 end
