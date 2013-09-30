@@ -97,4 +97,18 @@ class MerchantTest < MiniTest::Unit::TestCase
     end
     assert_equal total_revenue, m.revenue
   end
+
+  def test_revenue_accepts_a_date_parameter
+    m.revenue("2012-03-27 14:53:59 UTC")
+    assert_silent {"Date note accepted" }
+  end 
+
+  def test_revenue_only_with_specified_date
+    total_revenue = 0
+    m.invoices_for_date("2012-03-27 14:53:59 UTC").each do |invoice|
+      total_revenue += invoice.revenue_per_invoice
+    end
+
+    assert_equal total_revenue, m.revenue("2012-03-27 14:53:59 UTC")
+  end  
 end
