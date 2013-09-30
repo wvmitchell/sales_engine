@@ -23,4 +23,10 @@ class MerchantRepository < BaseRepository
   def sort_merchants_by_items_sold
     collection_array.sort_by {|merchant| merchant.total_items_sold}.reverse
   end
+
+  def revenue(date)
+    collection_array.inject(0) do |sum, merchant|
+      sum + merchant.revenue(date)
+    end
+  end
 end

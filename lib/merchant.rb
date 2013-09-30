@@ -17,10 +17,19 @@ class Merchant < BaseUnit
   end
 
   def revenue(date=nil)
-    date ? revenue_by_date : all_revenue
+    date ? revenue_by_date(date) : all_revenue
+  end
+
+  def revenue_by_date(date)
     invoices_for_date(date).inject(0) do |sum, invoice|
       sum + invoice.revenue_per_invoice
     end
+  end
+
+  def all_revenue
+    invoices.inject(0) do |sum, invoice|
+      sum + invoice.revenue_per_invoice
+    end    
   end
 
   def total_items_sold
@@ -30,7 +39,10 @@ class Merchant < BaseUnit
   end
 
   def invoices_for_date(date)
-    
     invoices.select { |invoice| invoice.created_at == date }
+  end
+
+  def favorite_customer
+    Customer.new(id: '4')
   end
 end

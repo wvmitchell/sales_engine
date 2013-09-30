@@ -121,4 +121,17 @@ class MerchantRepositoryTest < MiniTest::Unit::TestCase
       assert merchant.total_items_sold >= sorted_merchants[index+1].total_items_sold unless index+1 == sorted_merchants.count
     end
   end
+
+  def test_method_revenue_exists
+    assert merchant_repository.methods.include?(:revenue)
+  end
+
+  def test_method_revenue_does_return_all_revenue_for_specified_date
+    total_revenue = 0
+    date = "2012-03-27 14:53:59 UTC"
+    merchant_repository.collection_array.each do |merchant|
+      total_revenue += merchant.revenue(date)
+    end
+    assert_equal total_revenue, merchant_repository.revenue(date)
+  end
 end

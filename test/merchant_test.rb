@@ -5,6 +5,7 @@ require './lib/merchant'
 require './lib/item'
 require './lib/sales_engine'
 require './lib/invoice'
+require 'pry'
 
 class MerchantTest < MiniTest::Unit::TestCase
   
@@ -108,7 +109,18 @@ class MerchantTest < MiniTest::Unit::TestCase
     m.invoices_for_date("2012-03-27 14:53:59 UTC").each do |invoice|
       total_revenue += invoice.revenue_per_invoice
     end
-
     assert_equal total_revenue, m.revenue("2012-03-27 14:53:59 UTC")
-  end  
+  end
+
+  def test_method_favorite_customer_exists
+    assert m.methods.include?(:favorite_customer)
+  end 
+
+  def test_favorite_customer_returns_a_customer_object
+    assert_kind_of Customer, m.favorite_customer
+  end
+
+  def test_customer_id_exists_within_merchant_invoices
+    assert m.invoices.collect {|invoice| invoice.customer_id }.include?(m.favorite_customer.id)
+  end 
 end
