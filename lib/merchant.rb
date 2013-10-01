@@ -28,41 +28,43 @@ class Merchant < BaseUnit
   end
 
   def all_revenue
-    invoices.inject(0) do |sum, invoice|
+    @all_revenue ||= successful_invoices.inject(0) do |sum, invoice|
       sum + invoice.revenue_per_invoice
     end    
   end
 
   def total_items_sold
-    invoices.inject(0) do |sum, invoice|
+    @total_items_sold ||= invoices.inject(0) do |sum, invoice|
       sum + invoice.invoice_items.count
     end
   end
 
   def invoices_for_date(date)
-    invoices.select { |invoice| invoice.created_at == date }
+    successful_invoices.select { |invoice| invoice.created_at == date }
   end
 
   def favorite_customer
-    customer_id = customer_visits.max_by { |cust, vi| vi }.first
-    sales_engine_reference.customer_repository.find_by_id(customer_id)
+    customer_id = customer_visits.max_by { |cust, visit| visit }.first
+    @favorite_customer ||=  sales_engine_reference.customer_repository.find_by_id(customer_id)
   end
 
   def customer_visits
-    invoices.each_with_object(Hash.new(0)) do |invoice, hash_count|
+    @customer_visits ||= invoices.each_with_object(Hash.new(0)) do |invoice, hash_count|
       hash_count[invoice.customer_id] += 1
     end
   end
 
   def customers_with_pending_invoices
-    pending_invoices.collect do |pending_invoice|
+    @customer_with_pending_invoices ||= pending_invoices.collect do |pending_invoice|
       pending_invoice.customer 
     end
   end
 
   def pending_invoices
-    invoices.select do |inv|
-      inv.pending?
-    end
+    @pending_invoices ||= invoices.select { |inv| inv.pending? }
+  end
+
+  def successful_invoices
+    @successful_invoices ||= invoices.reject { |inv| inv.pending? }
   end
 end
