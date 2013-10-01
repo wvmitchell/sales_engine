@@ -15,4 +15,12 @@ class ItemRepository < BaseRepository
   def sort_by_revenue
     collection_array.sort_by {|item| item.revenue }.reverse
   end
+
+  def most_items(x=1)
+    sort_by_num_sold.take(x)
+  end
+
+  def sort_by_num_sold
+    collection_array.sort_by {|item| item.num_sold }.reverse
+  end
 end
