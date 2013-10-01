@@ -18,7 +18,7 @@ class Merchant < BaseUnit
   end
 
   def revenue(date=nil)
-    date ? revenue_by_date(date) : all_revenue
+    date ? BigDecimal(revenue_by_date(date))/100 : BigDecimal(all_revenue)/100
   end
 
   def revenue_by_date(date)

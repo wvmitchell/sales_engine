@@ -88,7 +88,7 @@ class MerchantTest < MiniTest::Unit::TestCase
   end
 
   def test_revenue_method_does_return_fixnum
-    assert_kind_of Fixnum, m.revenue
+    assert_kind_of BigDecimal, m.revenue
   end
 
   def test_revenue_does_return_sum_of_revenue_from_assosciated_invoices
@@ -96,7 +96,7 @@ class MerchantTest < MiniTest::Unit::TestCase
     m.invoices.each do |invoice|
       total_revenue += invoice.revenue_per_invoice
     end
-    assert_equal total_revenue, m.revenue
+    assert_equal BigDecimal(total_revenue)/100, m.revenue
   end
 
   def test_revenue_accepts_a_date_parameter
@@ -158,5 +158,9 @@ class MerchantTest < MiniTest::Unit::TestCase
         end
       end
     end
+  end
+
+  def test_method_successful_invoices_exists
+    assert m.methods.include?(:successful_invoices)
   end
 end

@@ -13,9 +13,13 @@ class BaseRepository
   def initialize(class_type, sales_engine=nil)
     @class_type = valid?(class_type) ? class_type : exit_error(class_type)
     @sales_engine_reference = sales_engine
-    @collection_array = create_collection
+    # @collection_array = create_collection
     define_find_by_methods
     define_find_by_all_methods
+  end
+
+  def collection_array
+    @collection_array ||= create_collection
   end
 
   def create_collection
@@ -53,6 +57,11 @@ class BaseRepository
     end
     new_hash
   end
+
+  # possible way to figure out a valid class type
+  # def self.inherited(subclass)
+    # sublclasses.push subclass
+  # end
 
   def valid?(class_type)
     [Customer, Invoice, InvoiceItem, Item, Merchant, Transaction].include?(class_type)
