@@ -1,7 +1,7 @@
 require_relative 'base_unit'
 require_relative 'item'
 require_relative 'invoice'
-require 'pry'
+
 
 class Merchant < BaseUnit
 
