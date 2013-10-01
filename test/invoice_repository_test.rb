@@ -6,12 +6,19 @@ require './lib/sales_engine'
 
 class InvoiceRepositoryTest < MiniTest::Unit::TestCase
 
-  attr_reader :ir, :se
+  attr_reader :ir, :se, :count, :dummy_customer, :dummy_merchant
 
   def setup
     @se = SalesEngine.new
     se.startup
-    @ir = se.invoice_repository 
+    @ir = se.invoice_repository
+    @count = ir.collection_array.count
+    @dummy_customer = ir.sales_engine_reference.customer_repository.collection_array.sample
+    @dummy_merchant = ir.sales_engine_reference.merchant_repository.collection_array.sample
+  end
+
+  def teardown
+    ir.collection_array.pop if ir.collection_array.count != count 
   end
 
   def test_it_exists
@@ -47,5 +54,16 @@ class InvoiceRepositoryTest < MiniTest::Unit::TestCase
     i1 = ir.random
     i2 = ir.random
     refute_equal i1, i2
+  end
+
+  def test_method_create_exists
+    assert ir.methods.include?(:create)
+  end
+
+  def test_method_create_adds_invoice_to_collection
+    first_count = ir.collection_array.count
+    ir.create(customer: dummy_customer, merchant: dummy_merchant)
+    second_count = ir.collection_array.count
+    assert_equal first_count+1, second_count
   end
 end
