@@ -10,6 +10,7 @@ class TransactionTest < MiniTest::Unit::TestCase
 
   def setup
     @se = SalesEngine.new
+    se.startup
     data = {id: '1',
 	          invoice_id: '2',
 	          credit_card_number: '4444',

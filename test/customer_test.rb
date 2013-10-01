@@ -11,8 +11,7 @@ class CustomerTest < MiniTest::Unit::TestCase
 
   def setup
     @se = SalesEngine.new
-    se.invoice_repository
-    se.transaction_repository
+    se.startup
 
     data =  { id: "1",
       first_name: "George",

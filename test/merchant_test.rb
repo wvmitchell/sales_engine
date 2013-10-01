@@ -13,7 +13,7 @@ class MerchantTest < MiniTest::Unit::TestCase
 
   def setup
     @se = SalesEngine.new
-    se.invoice_repository
+    se.startup
     data = { id: "27",
 	           name: "AwesomeBar",
 	           sales_engine_reference: se

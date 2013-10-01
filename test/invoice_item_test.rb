@@ -11,8 +11,7 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
 
   def setup
     se = SalesEngine.new
-    se.invoice_repository
-    se.item_repository
+    se.startup
     data = {id: "1",
 	    item_id: '2',
 	    invoice_id: '1',

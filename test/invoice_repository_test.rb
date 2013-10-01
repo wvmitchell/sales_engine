@@ -2,13 +2,16 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require './lib/invoice_repository'
+require './lib/sales_engine'
 
 class InvoiceRepositoryTest < MiniTest::Unit::TestCase
 
-  attr_reader :ir
+  attr_reader :ir, :se
 
   def setup
-    @ir = InvoiceRepository.new(Invoice)
+    @se = SalesEngine.new
+    se.startup
+    @ir = se.invoice_repository 
   end
 
   def test_it_exists

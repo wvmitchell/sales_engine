@@ -2,13 +2,16 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/transaction_repository'
+require_relative '../lib/sales_engine'
 
 class TransactionRepositoryTest < MiniTest::Unit::TestCase
   
-  attr_reader :tr
+  attr_reader :tr, :se
 
   def setup
-    @tr = TransactionRepository.new(Transaction) 
+    @se = SalesEngine.new
+    se.startup
+    @tr = se.transaction_repository 
   end
 
   def test_it_exists

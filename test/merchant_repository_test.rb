@@ -11,7 +11,8 @@ class MerchantRepositoryTest < MiniTest::Unit::TestCase
 
   def setup
     se = SalesEngine.new
-    @merchant_repository = MerchantRepository.new(Merchant, se)
+    se.startup
+    @merchant_repository = se.merchant_repository 
   end
 
   def test_it_exists
