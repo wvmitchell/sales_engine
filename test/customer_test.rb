@@ -86,13 +86,13 @@ class CustomerTest < MiniTest::Unit::TestCase
   end
 
   def test_favorite_merchant_returns_merchant_with_most_invices
-    data2 = { id: "2",
+    data2 = { id: 2,
 	      first_name: "Cecilia",
 	      last_name: "Osinski",
               sales_engine_reference: se
             }
     customer2 = Customer.new(data2)
-    assert_equal '27', customer2.favorite_merchant.id
+    assert_equal 27, customer2.favorite_merchant.id
   end
 
   def test_successful_invoices_exists

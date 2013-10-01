@@ -34,7 +34,7 @@ class Merchant < BaseUnit
   end
 
   def total_items_sold
-    @total_items_sold ||= invoices.inject(0) do |sum, invoice|
+    @total_items_sold ||= successful_invoices.inject(0) do |sum, invoice|
       sum + invoice.invoice_items.count
     end
   end
