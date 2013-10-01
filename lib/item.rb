@@ -1,6 +1,5 @@
 require_relative 'base_unit'
 
-
 class Item < BaseUnit
 
   def invoice_items
@@ -28,12 +27,15 @@ class Item < BaseUnit
   end 
 
   def best_day
-    create_date_hash.max_by { |date, quantity| quantity }.first
+   Date.parse(create_date_hash.max_by { |date, quantity| quantity }.first)
   end
 
   def create_date_hash
     invoice_items.each_with_object(Hash.new(0)) do |invoice_item, hash|
-      hash[invoice_item.created_at[0,10]] += invoice_item.quantity.to_i
-    end
+      date = invoice_item.invoice.created_at
+      quant = invoice_item.quantity
+
+      hash[date[0,10]] += quant.to_i unless invoice_item.invoice.pending?
+    end  
   end
 end
