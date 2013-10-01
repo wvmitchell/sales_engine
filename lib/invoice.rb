@@ -48,4 +48,19 @@ class Invoice < BaseUnit
   def pending?
     transactions.all? { |transaction| transaction.result == "failed" }
   end  
+
+  def charge(data)
+    transactions = sales_engine_reference.transaction_repository.collection_array
+    transaction = {}
+    transaction[:id] =(transactions.count + 1).to_s
+    transaction[:invoice_id] = id
+    transaction[:credit_card_number] = data[:credit_card_number]
+    transaction[:credit_card_expiration] = data[:credit_card_expiration]
+    transaction[:result] = data[:result]
+    transaction[:created_at] = Time.now.utc.to_s
+    transaction[:updated_at] = Time.now.utc.to_s
+    transaction[:sales_engine_reference] = sales_engine_reference
+
+    transactions << Transaction.new(transaction)
+  end
 end

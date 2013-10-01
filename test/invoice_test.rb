@@ -7,7 +7,7 @@ require_relative '../lib/invoice_item'
 
 class InvoiceTest < MiniTest::Unit::TestCase
 
-  attr_reader :inv, :se
+  attr_reader :inv, :se, :first_trans
 
   def setup
     @se = SalesEngine.new
@@ -19,8 +19,14 @@ class InvoiceTest < MiniTest::Unit::TestCase
     sales_engine_reference: se 
     }
     @inv = Invoice.new(data)
+
+    @first_trans = inv.sales_engine_reference.transaction_repository.collection_array
   end
 
+  def teardown
+   transactions = inv.sales_engine_reference.transaction_repository.collection_array
+   transactions.pop unless transactions.count <=  first_trans.count
+  end 
   def test_it_exists
     assert_kind_of Invoice, inv
   end
@@ -152,5 +158,16 @@ class InvoiceTest < MiniTest::Unit::TestCase
     data2 = { id: 13, sales_engine_reference: se }
     inv2 = Invoice.new(data2)
     assert inv2.pending?
+  end
+
+  def test_charge_method_exists
+    assert inv.methods.include?(:charge)
+  end
+
+  def test_charge_method_creates_transaction
+    first_count = inv.transactions.count
+    inv.charge(credit_card_number: "11111111111111", credit_card_expiration: "01/01", result: "success")
+    second_count = inv.transactions.count
+    assert_equal first_count + 1, second_count
   end
 end
