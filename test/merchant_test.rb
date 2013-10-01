@@ -153,7 +153,9 @@ class MerchantTest < MiniTest::Unit::TestCase
     m2 = Merchant.new(data2)
     m2.customers_with_pending_invoices.each do |customer|
       customer.invoices.each do |invoice|
-	assert invoice.pending?
+	      if invoice.merchant_id == m2.id 
+          assert invoice.pending?
+        end
       end
     end
   end

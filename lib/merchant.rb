@@ -55,8 +55,14 @@ class Merchant < BaseUnit
   end
 
   def customers_with_pending_invoices
-    invoices.collect do |inv|
-      inv.customer if inv.pending?
+    pending_invoices.collect do |pending_invoice|
+      pending_invoice.customer 
+    end
+  end
+
+  def pending_invoices
+    invoices.select do |inv|
+      inv.pending?
     end
   end
 end

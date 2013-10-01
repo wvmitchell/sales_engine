@@ -46,6 +46,6 @@ class Invoice < BaseUnit
   end
 
   def pending?
-    transactions.all? { |transaction| transaction.result == "failure" }
+    transactions.all? { |transaction| transaction.result == "failed" }
   end  
 end
