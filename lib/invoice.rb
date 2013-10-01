@@ -7,19 +7,19 @@ class Invoice < BaseUnit
 
   def transactions
     sales_engine_reference.transaction_repository.collection_array.select do |transaction|
-      transaction.invoice_id == id
+      transaction.invoice_id == id.to_s
     end
   end
  
   def invoice_items
     sales_engine_reference.invoice_item_repository.collection_array.select do |invoice_item|
-      invoice_item.invoice_id == id
+      invoice_item.invoice_id == id.to_s 
     end
   end
 
   def items
     sales_engine_reference.item_repository.collection_array.select do |item|
-      invoice_items_ids.include?(item.id)
+      invoice_items_ids.include?(item.id.to_s)
     end
   end
 
@@ -35,7 +35,7 @@ class Invoice < BaseUnit
 
   def merchant
     sales_engine_reference.merchant_repository.collection_array.find do |merchant|
-      merchant.id == merchant_id 
+      merchant.id.to_s == merchant_id 
     end
   end
 
@@ -52,7 +52,7 @@ class Invoice < BaseUnit
   def charge(data)
     transactions = sales_engine_reference.transaction_repository.collection_array
     transaction = {}
-    transaction[:id] =(transactions.count + 1).to_s
+    transaction[:id] =(transactions.count + 1)
     transaction[:invoice_id] = id
     transaction[:credit_card_number] = data[:credit_card_number]
     transaction[:credit_card_expiration] = data[:credit_card_expiration]

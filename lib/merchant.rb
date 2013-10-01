@@ -7,13 +7,13 @@ class Merchant < BaseUnit
 
   def invoices
     sales_engine_reference.invoice_repository.collection_array.select do |invoice|
-      invoice.merchant_id == id 
+      invoice.merchant_id == id.to_s 
     end
   end
   
   def items
     sales_engine_reference.item_repository.collection_array.select do |item| 
-      item.merchant_id == id
+      item.merchant_id == id.to_s
     end
   end
 

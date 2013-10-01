@@ -5,13 +5,13 @@ class Item < BaseUnit
 
   def invoice_items
     sales_engine_reference.invoice_item_repository.collection_array.select do |ii|
-      ii.item_id == id 
+      ii.item_id == id.to_s 
     end
   end
 
   def merchant
     sales_engine_reference.merchant_repository.collection_array.find do |mer|
-      mer.id == merchant_id
+      mer.id.to_s == merchant_id
     end
   end
 

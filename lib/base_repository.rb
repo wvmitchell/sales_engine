@@ -25,6 +25,8 @@ class BaseRepository
   def create_collection
     create_csv_object.map do |row|
       data = row.to_hash
+      data[:id] = data[:id].to_i
+      data[:customer_id] = data[:customer_id].to_i if data[:customer_id]
       data[:sales_engine_reference] = sales_engine_reference
       class_type.new(data)
     end 
@@ -33,7 +35,7 @@ class BaseRepository
   def define_find_by_methods
     attributes.each do |attribute| 
       self.class.send(:define_method, "find_by_#{attribute}") do |match|
-        collection_array.find { |item| item.instance_variable_get("@#{attribute}").downcase ==  match.to_s.downcase }
+        collection_array.find { |item| item.instance_variable_get("@#{attribute}").to_s.downcase ==  match.to_s.downcase }
       end
     end      
   end
@@ -41,7 +43,7 @@ class BaseRepository
   def define_find_by_all_methods
     attributes.each do |attribute| 
       self.class.send(:define_method, "find_all_by_#{attribute}") do |match|
-        collection_array.find_all { |item| item.instance_variable_get("@#{attribute}").downcase ==  match.to_s.downcase }
+        collection_array.find_all { |item| item.instance_variable_get("@#{attribute}").to_s.downcase ==  match.to_s.downcase }
       end
     end 
   end

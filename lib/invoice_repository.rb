@@ -9,7 +9,7 @@ class InvoiceRepository < BaseRepository
   end
 
   def create(data={})
-    id = (collection_array.last.id.to_i + 1).to_s
+    id = (collection_array.last.id.to_i + 1)
     customer_id = data[:customer].id
     merchant_id = data[:merchant].id
     status = data[:status]
@@ -35,7 +35,7 @@ class InvoiceRepository < BaseRepository
   def create_invoice_items(invoice_id, items)
     invoice_items = sales_engine_reference.invoice_item_repository.collection_array
     items.uniq.each_with_object({}) do |item, data|
-      data[:id] = (invoice_items.last.id.to_i + 1).to_s
+      data[:id] = (invoice_items.last.id.to_i + 1)
       data[:item_id] = item.id
       data[:invoice_id] = invoice_id
       data[:quantity] = items.count(item)
