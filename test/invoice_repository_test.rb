@@ -19,6 +19,8 @@ class InvoiceRepositoryTest < MiniTest::Unit::TestCase
 
   def teardown
     ir.collection_array.pop if ir.collection_array.count != count 
+    invoice_items = ir.sales_engine_reference.invoice_item_repository.collection_array
+    invoice_items.take(100) if invoice_items.count > 100
   end
 
   def test_it_exists
@@ -62,8 +64,18 @@ class InvoiceRepositoryTest < MiniTest::Unit::TestCase
 
   def test_method_create_adds_invoice_to_collection
     first_count = ir.collection_array.count
-    ir.create(customer: dummy_customer, merchant: dummy_merchant)
+    all_items = ir.sales_engine_reference.item_repository.collection_array
+    ir.create(customer: dummy_customer, merchant: dummy_merchant, status: "shipped", items: all_items.sample(3))
     second_count = ir.collection_array.count
     assert_equal first_count+1, second_count
+  end
+
+  def test_method_create_addes_invoice_items_to_collection
+    first_count = ir.sales_engine_reference.invoice_item_repository.collection_array.count
+    all_items = ir.sales_engine_reference.item_repository.collection_array
+    ir.create(customer: dummy_customer, merchant: dummy_merchant, status: "shipped", 
+	      items: all_items.sample(3))
+    second_count = ir.sales_engine_reference.invoice_item_repository.collection_array.count
+    assert_equal first_count + 3, second_count
   end
 end
