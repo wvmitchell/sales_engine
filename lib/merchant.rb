@@ -1,6 +1,7 @@
 require_relative 'base_unit'
 require_relative 'item'
 require_relative 'invoice'
+require 'pry'
 
 class Merchant < BaseUnit
 
@@ -55,7 +56,8 @@ class Merchant < BaseUnit
 
   def customers_with_pending_invoices
     invoices.collect do |inv|
-      sales_engine_reference.customer_repository.find_by_id(inv.customer_id)
+      customer = sales_engine_reference.customer_repository.find_by_id(inv.customer_id)
+      customer if customer.pending_invoice?
     end
   end
 end

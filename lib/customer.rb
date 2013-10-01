@@ -28,7 +28,7 @@ class Customer < BaseUnit
   def successful_invoices
     invoices.select do |invoice|
       invoice.transactions.select do |trans|
-	trans.result == 'success'
+	       trans.result == 'success'
       end
     end
   end  
@@ -41,5 +41,11 @@ class Customer < BaseUnit
     valid_merchants.each_with_object(Hash.new(0)) do |merchant, transaction_count|
        transaction_count[merchant.id] += 1
     end  
+  end
+
+  def pending_invoice?
+    transactions.any? do |transaction|
+      transaction.result == 'failure'
+    end
   end
 end

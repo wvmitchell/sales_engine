@@ -147,4 +147,10 @@ class MerchantTest < MiniTest::Unit::TestCase
       assert_kind_of Customer, customer
     end
   end
+
+  def test_customer_with_pending_invoices_returns_array_of_customers_with_unsuccesful_transactions
+    m.customers_with_pending_invoices.each do |customer|
+      assert customer.pending_invoice?  
+    end
+  end
 end
