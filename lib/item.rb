@@ -1,9 +1,10 @@
 require_relative 'base_unit'
+require 'pry'
 
 class Item < BaseUnit
 
-  def invoice_item
-    sales_engine_reference.invoice_item_repository.collection_array.find do |ii|
+  def invoice_items
+    sales_engine_reference.invoice_item_repository.collection_array.select do |ii|
       ii.item_id == id 
     end
   end
@@ -13,5 +14,10 @@ class Item < BaseUnit
       mer.id == merchant_id
     end
   end
-  
+
+  def revenue
+    invoice_items.inject(0) do |sum, invoice_item|
+      sum + invoice_item.quantity.to_i * invoice_item.unit_price.to_i
+    end
+  end 
 end

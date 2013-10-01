@@ -2,6 +2,8 @@ require 'minitest'
 require 'minitest/autorun'
 require 'minitest/pride'
 require_relative '../lib/item'
+require_relative '../lib/sales_engine'
+require 'pry'
 
 class ItemTest < MiniTest::Unit::TestCase
   
@@ -10,6 +12,7 @@ class ItemTest < MiniTest::Unit::TestCase
   def setup
     @se = SalesEngine.new
     se.invoice_repository
+    se.invoice_item_repository
     data = {id: '539',
 	    name: "Rolen",
 	    description: "Awesome",
@@ -46,16 +49,22 @@ class ItemTest < MiniTest::Unit::TestCase
     assert_equal '10', item.merchant_id
   end
 
-  def test_invoice_item_method_exists
-    assert item.methods.include?(:invoice_item)
+  def test_invoice_items_method_exists
+    assert item.methods.include?(:invoice_items)
   end
 
-  def test_invoice_item_method_returns_invoice_item_type
-    assert_kind_of InvoiceItem, item.invoice_item
+  def test_invoice_items_method_returns_array
+    assert_kind_of Array, item.invoice_items
   end
 
-  def test_invoice_item_method_returns_invoice_item_associated_with_item
-    assert_equal item.id, item.invoice_item.item_id
+  def test_invoice_items_method_not_empty
+    refute item.invoice_items.empty?
+  end
+
+  def test_invoice_items_method_returns_invoice_items_associated_with_item
+    item.invoice_items.each do |invoice_item|
+      assert_equal item.id, invoice_item.item_id 
+    end
   end
 
   def test_merchant_method_exists

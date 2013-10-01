@@ -7,5 +7,12 @@ class ItemRepository < BaseRepository
     #'./data/tmp_items.csv'
     './data/items.csv'
   end
-  
+
+  def most_revenue(x=1)
+    sort_by_revenue.take(x)
+  end 
+
+  def sort_by_revenue
+    collection_array.sort_by {|item| item.revenue }.reverse
+  end
 end
