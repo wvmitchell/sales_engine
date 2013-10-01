@@ -5,7 +5,6 @@ require './lib/merchant'
 require './lib/item'
 require './lib/sales_engine'
 require './lib/invoice'
-require 'pry'
 
 class MerchantTest < MiniTest::Unit::TestCase
   
@@ -99,17 +98,21 @@ class MerchantTest < MiniTest::Unit::TestCase
     assert_equal BigDecimal(total_revenue)/100, m.revenue
   end
 
+  def test_invoices_for_date_does_return_invoices
+    refute m.invoices_for_date(Date.parse("2012-03-07 12:54:10 UTC")).empty?
+  end
+
   def test_revenue_accepts_a_date_parameter
-    m.revenue("2012-03-27 14:53:59 UTC")
+    m.revenue(Date.parse("2012-03-07 12:54:10 UTC"))
     assert_silent {"Date note accepted" }
   end 
 
   def test_revenue_only_with_specified_date
     total_revenue = 0
-    m.invoices_for_date("2012-03-27 14:53:59 UTC").each do |invoice|
+    m.invoices_for_date(Date.parse("2012-03-07 12:54:10 UTC")).each do |invoice|
       total_revenue += invoice.revenue_per_invoice
     end
-    assert_equal total_revenue, m.revenue("2012-03-27 14:53:59 UTC")
+    assert_equal BigDecimal(total_revenue)/100, m.revenue(Date.parse("2012-03-07 12:54:10 UTC"))
   end
 
   def test_method_favorite_customer_exists

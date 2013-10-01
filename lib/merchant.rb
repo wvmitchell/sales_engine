@@ -40,7 +40,9 @@ class Merchant < BaseUnit
   end
 
   def invoices_for_date(date)
-    successful_invoices.select { |invoice| invoice.created_at == date }
+    successful_invoices.select do |invoice| 
+      Date.parse(invoice.created_at) == date 
+    end
   end
 
   def favorite_customer

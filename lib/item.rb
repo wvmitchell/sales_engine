@@ -16,13 +16,13 @@ class Item < BaseUnit
   end
 
   def revenue
-    invoice_items.inject(0) do |sum, invoice_item|
+    @revenue ||= invoice_items.inject(0) do |sum, invoice_item|
       sum + invoice_item.quantity.to_i * invoice_item.unit_price.to_i
     end
   end
 
   def num_sold
-    invoice_items.inject(0) do |sum, invoice_item|
+    @num_sold ||= invoice_items.inject(0) do |sum, invoice_item|
       sum + invoice_item.quantity.to_i
     end
   end 

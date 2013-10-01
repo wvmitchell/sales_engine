@@ -8,25 +8,24 @@ class Customer < BaseUnit
   end
 
   def invoices
-    sales_engine_reference.invoice_repository.collection_array.select do |invoice|
+    @invoices ||= sales_engine_reference.invoice_repository.collection_array.select do |invoice|
       invoice.customer_id == id
     end
   end
 
   def transactions
-    sales_engine_reference.transaction_repository.collection_array.select do |trans|
+    @transactions ||= sales_engine_reference.transaction_repository.collection_array.select do |trans|
       trans.invoice.customer_id == id 
     end
   end
 
   def favorite_merchant
     merchant_id = merchant_count.max_by { |merchant, count| count }.first
-   
-   sales_engine_reference.merchant_repository.find_by_id(merchant_id)
+    @favorite_merchant ||= sales_engine_reference.merchant_repository.find_by_id(merchant_id)
   end
 
   def successful_invoices
-    invoices.select do |invoice|
+    @successful_invoices ||= invoices.select do |invoice|
       invoice.transactions.select do |trans|
 	       trans.result == 'success'
       end
@@ -34,7 +33,7 @@ class Customer < BaseUnit
   end  
 
   def valid_merchants
-    successful_invoices.collect { |inv| inv.merchant  }
+    @valid_merchants ||= successful_invoices.collect { |inv| inv.merchant  }
   end
 
   def merchant_count
