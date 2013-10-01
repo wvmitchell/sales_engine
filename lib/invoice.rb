@@ -1,6 +1,7 @@
 require_relative 'base_unit'
 require_relative 'invoice'
 require_relative 'item'
+require 'pry'
 
 class Invoice < BaseUnit
 
@@ -43,4 +44,8 @@ class Invoice < BaseUnit
       sum + invoice_item.unit_price.to_i 
     end
   end
+
+  def pending?
+    transactions.all? { |transaction| transaction.result == "failure" }
+  end  
 end

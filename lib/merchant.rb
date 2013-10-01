@@ -56,8 +56,7 @@ class Merchant < BaseUnit
 
   def customers_with_pending_invoices
     invoices.collect do |inv|
-      customer = sales_engine_reference.customer_repository.find_by_id(inv.customer_id)
-      customer if customer.pending_invoice?
+      inv.customer if inv.pending?
     end
   end
 end

@@ -149,8 +149,12 @@ class MerchantTest < MiniTest::Unit::TestCase
   end
 
   def test_customer_with_pending_invoices_returns_array_of_customers_with_unsuccesful_transactions
-    m.customers_with_pending_invoices.each do |customer|
-      assert customer.pending_invoice?  
+    data2 = {id: "34", sales_engine_reference: se}
+    m2 = Merchant.new(data2)
+    m2.customers_with_pending_invoices.each do |customer|
+      customer.invoices.each do |invoice|
+	assert invoice.pending?
+      end
     end
   end
 end

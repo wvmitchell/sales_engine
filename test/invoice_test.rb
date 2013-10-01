@@ -144,4 +144,14 @@ class InvoiceTest < MiniTest::Unit::TestCase
   def test_revenue_per_invoice_method_returns_fixnum
     assert_kind_of Fixnum, inv.revenue_per_invoice
   end
+
+  def test_pending_method_exists
+    assert inv.methods.include?(:pending?)
+  end
+
+  def test_pending_returns_true_if_no_sucesses
+    data2 = { id: 13, sales_engine_reference: se }
+    inv2 = Invoice.new(data2)
+    assert inv2.pending?
+  end
 end

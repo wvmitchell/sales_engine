@@ -42,10 +42,4 @@ class Customer < BaseUnit
        transaction_count[merchant.id] += 1
     end  
   end
-
-  def pending_invoice?
-    transactions.any? do |transaction|
-      transaction.result == 'failure'
-    end
-  end
 end
