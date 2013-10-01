@@ -83,11 +83,11 @@ class ItemTest < MiniTest::Unit::TestCase
   end
 
   def test_best_day_method_returns_string
-    assert_kind_of String, item.best_day
+    assert_kind_of Date, item.best_day
   end
 
   def test_best_day_return_a_date
-    assert_equal "2012-03-27", item.best_day
+    assert_equal Date.parse("2012-03-25"), item.best_day
   end
 
   def test_create_date_hash_method
