@@ -77,4 +77,36 @@ class ItemTest < MiniTest::Unit::TestCase
   def test_merchant_method_returns_merchant_associated_with_item
     assert_equal item.merchant_id, item.merchant.id
   end
+
+  def test_best_day_method_exists
+    assert item.methods.include?(:best_day)
+  end
+
+  def test_best_day_method_returns_string
+    assert_kind_of String, item.best_day
+  end
+
+  def test_best_day_return_a_date
+    assert_equal "2012-03-27", item.best_day
+  end
+
+  def test_create_date_hash_method
+    assert item.methods.include?(:create_date_hash)
+  end
+
+  def test_create_date_hash_returns_hash
+    assert_kind_of Hash, item.create_date_hash
+  end
+
+  def test_create_date_hash_keys_are_dates
+    item.create_date_hash.each_key do |key|
+      assert_kind_of String, key
+    end
+  end
+
+  def test_create_date_hash_values_are_ints
+    item.create_date_hash.each_value do |value|
+      assert_kind_of Fixnum, value
+    end
+  end
 end  

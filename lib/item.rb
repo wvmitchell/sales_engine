@@ -26,4 +26,14 @@ class Item < BaseUnit
       sum + invoice_item.quantity.to_i
     end
   end 
+
+  def best_day
+    create_date_hash.max_by { |date, quantity| quantity }.first
+  end
+
+  def create_date_hash
+    invoice_items.each_with_object(Hash.new(0)) do |invoice_item, hash|
+      hash[invoice_item.created_at[0,10]] += invoice_item.quantity.to_i
+    end
+  end
 end
