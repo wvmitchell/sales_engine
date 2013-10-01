@@ -100,10 +100,37 @@ class ItemRepositoryTest< MiniTest::Unit::TestCase
   end
 
   def test_method_most_revenue_returns_sorted_list_of_items_ordered_by_revenue_generated
-    skip
-    sorted_items = ir.sort_by_revenue
+    # Made this work by:
+    # 1) change test to actually use most_revenue method
+    # 2) change assert to check revenue of item, rather than unit_price
+    sorted_items = ir.most_revenue(10)
     sorted_items.each_with_index do |item, index|
-      assert item.unit_price >= sorted_items[index+1].unit_price unless index+1 == sorted_items.count
+      assert item.revenue >= sorted_items[index+1].revenue unless index+1 == sorted_items.count
+    end
+  end
+
+  def test_method_most_items_exists
+    assert ir.methods.include?(:most_items)
+  end
+
+  def test_method_most_items_returns_array
+    assert_kind_of Array, ir.most_items
+  end
+
+  def test_method_most_items_returns_requested_number_of_results
+    assert_equal 5, ir.most_items(5).count
+  end
+
+  def test_method_most_items_returns_array_of_items
+    ir.most_items.each do |item|
+      assert_kind_of Item, item
+    end
+  end
+
+  def test_method_most_items_returns_sorted_list_of_items_ordered_by_total_items_sold
+    sorted_items = ir.most_items(10)
+    sorted_items.each_with_index do |item, index|
+      assert item.num_sold >= sorted_items[index+1].num_sold unless index+1 == sorted_items.count
     end
   end
 

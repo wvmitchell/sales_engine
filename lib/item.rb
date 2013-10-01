@@ -19,6 +19,12 @@ class Item < BaseUnit
     invoice_items.inject(0) do |sum, invoice_item|
       sum + invoice_item.quantity.to_i * invoice_item.unit_price.to_i
     end
+  end
+
+  def num_sold
+    invoice_items.inject(0) do |sum, invoice_item|
+      sum + invoice_item.quantity.to_i
+    end
   end 
 
   def best_day
