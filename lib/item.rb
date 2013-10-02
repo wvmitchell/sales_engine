@@ -3,15 +3,17 @@ require_relative 'base_unit'
 class Item < BaseUnit
 
   def invoice_items
-    @invoice_items ||= sales_engine_reference.invoice_item_repository.collection_array.select do |ii|
-      ii.item_id == id && !ii.invoice.pending?
+    @invoice_items ||= sales_engine_reference.invoice_item_repository.successful_invoice_items.select do |ii|
+      ii.item_id == id #&& !ii.invoice.pending?
     end
   end
 
   def merchant
-    @merchant ||= sales_engine_reference.merchant_repository.collection_array.find do |mer|
-      mer.id.to_s == merchant_id
-    end
+    #@merchant ||= sales_engine_reference.merchant_repository.collection_array.find do |mer|
+    #  mer.id.to_s == merchant_id
+    #end
+
+    @merchant ||= sales_engine_reference.merchant_repository.find_by_id(merchant_id)
   end
 
   def revenue

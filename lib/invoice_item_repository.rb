@@ -15,4 +15,10 @@ class InvoiceItemRepository < BaseRepository
    "testing"
   end
 
+  def successful_invoice_items
+    @successful_invoice_items ||= collection_array.reject do |ii|
+      ii.invoice.pending?
+    end
+  end
+
 end
