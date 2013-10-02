@@ -27,6 +27,8 @@ class BaseRepository
       data = row.to_hash
       data[:id] = data[:id].to_i
       data[:customer_id] = data[:customer_id].to_i if data[:customer_id]
+      data[:unit_price] = BigDecimal(data[:unit_price])/100 if data[:unit_price]
+      data[:item_id] = data[:item_id].to_i if data[:item_id]
       data[:sales_engine_reference] = sales_engine_reference
       class_type.new(data)
     end 

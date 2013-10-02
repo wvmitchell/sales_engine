@@ -4,7 +4,7 @@ class Item < BaseUnit
 
   def invoice_items
     sales_engine_reference.invoice_item_repository.collection_array.select do |ii|
-      ii.item_id == id.to_s 
+      ii.item_id == id 
     end
   end
 
@@ -27,7 +27,7 @@ class Item < BaseUnit
   end 
 
   def best_day
-   Date.parse(create_date_hash.max_by { |date, quantity| quantity }.first)
+    Date.parse(create_date_hash.max_by { |date, quantity| quantity }.first)
   end
 
   def create_date_hash

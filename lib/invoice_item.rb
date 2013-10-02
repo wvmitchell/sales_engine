@@ -11,7 +11,7 @@ class InvoiceItem < BaseUnit
 
   def item
     sales_engine_reference.item_repository.collection_array.find do |it|
-      it.id.to_s == item_id
+      it.id == item_id
     end
   end
 end
