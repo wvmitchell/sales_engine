@@ -6,17 +6,14 @@ require_relative 'item'
 class Invoice < BaseUnit
 
   def transactions
-    sales_engine_reference.transaction_repository.collection_array.select do |transaction|
-      transaction.invoice_id == id.to_s
-    end
+    #sales_engine_reference.transaction_repository.collection_array.select do |transaction|
+    #  transaction.invoice_id == id.to_s
+    #end
+    sales_engine_reference.transaction_repository.find_all_by_invoice_id(id)
   end
  
   def invoice_items
-    #sales_engine_reference.invoice_item_repository.collection_array.select do |invoice_item|
-    #  invoice_item.invoice_id == id.to_s 
-    #end
     sales_engine_reference.invoice_item_repository.find_all_by_invoice_id(id)
-#    sales_engine_reference.invoice_item_repository.find_all_by_invoice_id(1)
   end
 
   def items
@@ -26,9 +23,6 @@ class Invoice < BaseUnit
   end
 
   def customer
-    #sales_engine_reference.customer_repository.collection_array.find do |customer|
-    #  customer.id == customer_id.to_s
-    #end
     sales_engine_reference.customer_repository.find_by_id(customer_id)
   end
 
