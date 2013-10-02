@@ -8,4 +8,11 @@ class InvoiceItemRepository < BaseRepository
     './data/invoice_items.csv'
   end
 
+  def find_all_by_invoice_id(invoice_id)
+   # collection_array.find_all do |invoice_item|
+   #   invoice_item.invoice_id.to_s == invoice_id.to_s
+   # end
+   "testing"
+  end
+
 end

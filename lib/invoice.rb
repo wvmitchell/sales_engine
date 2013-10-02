@@ -12,21 +12,25 @@ class Invoice < BaseUnit
   end
  
   def invoice_items
-    sales_engine_reference.invoice_item_repository.collection_array.select do |invoice_item|
-      invoice_item.invoice_id == id.to_s 
-    end
+    #sales_engine_reference.invoice_item_repository.collection_array.select do |invoice_item|
+    #  invoice_item.invoice_id == id.to_s 
+    #end
+    sales_engine_reference.invoice_item_repository.find_all_by_invoice_id(id)
+#    sales_engine_reference.invoice_item_repository.find_all_by_invoice_id(1)
   end
 
   def items
-    sales_engine_reference.item_repository.collection_array.select do |item|
-      invoice_items_ids.include?(item.id)
+    invoice_items.collect do |invoice_item|
+      sales_engine_reference.item_repository.find_by_id(invoice_item.item_id)
     end
   end
 
   def customer
-    sales_engine_reference.customer_repository.collection_array.find do |customer|
-      customer.id == customer_id
-    end
+    #sales_engine_reference.customer_repository.collection_array.find do |customer|
+    #  customer.id == customer_id.to_s
+    #end
+    sales_engine_reference.customer_repository.find_by_id(customer_id)
+
   end
 
   def invoice_items_ids
@@ -34,9 +38,7 @@ class Invoice < BaseUnit
   end
 
   def merchant
-    sales_engine_reference.merchant_repository.collection_array.find do |merchant|
-      merchant.id.to_s == merchant_id 
-    end
+    sales_engine_reference.merchant_repository.find_by_id(merchant_id)
   end
 
   def revenue_per_invoice
@@ -50,7 +52,7 @@ class Invoice < BaseUnit
   end  
 
   def charge(data)
-    transactions = sales_engine_reference.transaction_repository.collection_array
+    all_transactions = sales_engine_reference.transaction_repository.collection_array
     transaction = {}
     transaction[:id] =(transactions.count + 1)
     transaction[:invoice_id] = id
@@ -61,6 +63,6 @@ class Invoice < BaseUnit
     transaction[:updated_at] = Time.now.utc.to_s
     transaction[:sales_engine_reference] = sales_engine_reference
 
-    transactions << Transaction.new(transaction)
+    all_transactions << Transaction.new(transaction)
   end
 end

@@ -170,4 +170,11 @@ class InvoiceTest < MiniTest::Unit::TestCase
     second_count = inv.transactions.count
     assert_equal first_count + 1, second_count
   end
+
+  def test_charge_method_creates_into_total_transactions
+    first_count = inv.sales_engine_reference.transaction_repository.collection_array.count
+    inv.charge(credit_card_number: "11111111111111", credit_card_expiration: "01/01", result: "success")
+    second_count = inv.sales_engine_reference.transaction_repository.collection_array.count
+    assert_equal first_count + 1, second_count
+  end
 end
