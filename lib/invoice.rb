@@ -30,7 +30,6 @@ class Invoice < BaseUnit
     #  customer.id == customer_id.to_s
     #end
     sales_engine_reference.customer_repository.find_by_id(customer_id)
-
   end
 
   def invoice_items_ids
@@ -43,7 +42,7 @@ class Invoice < BaseUnit
 
   def revenue_per_invoice
     invoice_items.inject(0) do |sum, invoice_item| 
-      sum + invoice_item.unit_price.to_i 
+      sum + invoice_item.unit_price * invoice_item.quantity.to_i 
     end
   end
 
