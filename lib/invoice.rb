@@ -19,7 +19,7 @@ class Invoice < BaseUnit
 
   def items
     sales_engine_reference.item_repository.collection_array.select do |item|
-      invoice_items_ids.include?(item.id.to_s)
+      invoice_items_ids.include?(item.id)
     end
   end
 

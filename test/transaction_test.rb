@@ -11,8 +11,8 @@ class TransactionTest < MiniTest::Unit::TestCase
   def setup
     @se = SalesEngine.new
     se.startup
-    data = {id: '1',
-	          invoice_id: '2',
+    data = {id: 1,
+	          invoice_id: 2,
 	          credit_card_number: '4444',
 	          credit_card_expiration_date: "",
             result: "success",
@@ -28,11 +28,11 @@ class TransactionTest < MiniTest::Unit::TestCase
   end
 
   def test_id_is_set
-    assert_equal '1', t.id
+    assert_equal 1, t.id
   end
 
   def test_invoice_id_is_set
-    assert_equal '2', t.invoice_id
+    assert_equal 2, t.invoice_id
   end
 
   def test_credit_card_number_is_set
@@ -56,7 +56,7 @@ class TransactionTest < MiniTest::Unit::TestCase
   end
 
   def test_invoice_method_does_return_invoice_associated_with_this_transaction
-    assert_equal t.invoice_id, t.invoice.id
+    assert_equal t.invoice_id, t.invoice.id.to_s
   end
 
 end

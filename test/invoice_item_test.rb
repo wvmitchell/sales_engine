@@ -12,11 +12,11 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
   def setup
     se = SalesEngine.new
     se.startup
-    data = {id: "1",
-	    item_id: '2',
+    data = {id: 1,
+	    item_id: 2,
 	    invoice_id: '1',
 	    quantity: '5',
-	    unit_price: '13635',
+	    unit_price: BigDecimal('13635')/100,
 	    sales_engine_reference: se
   }
 
@@ -28,11 +28,11 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
   end
   
   def test_id_is_set
-    assert_equal "1", ii.id
+    assert_equal 1, ii.id
   end
 
   def test_item_id_is_set
-    assert_equal '2', ii.item_id
+    assert_equal 2, ii.item_id
   end
 
   def test_invoice_id_is_set
@@ -44,7 +44,7 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
   end
 
   def test_unit_price_is_set
-    assert_equal '13635', ii.unit_price
+    assert_equal BigDecimal('13635')/100, ii.unit_price
   end
 
   def test_method_invoice_exists
@@ -56,7 +56,7 @@ class InvoiceItemTest < MiniTest::Unit::TestCase
   end
 
   def test_method_invoice_matches_invoice_id
-    assert_equal ii.invoice_id, ii.invoice.id
+    assert_equal ii.invoice_id, ii.invoice.id.to_s 
   end
 
   def test_method_item_exists

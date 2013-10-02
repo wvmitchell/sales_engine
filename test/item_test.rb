@@ -75,7 +75,7 @@ class ItemTest < MiniTest::Unit::TestCase
   end
 
   def test_merchant_method_returns_merchant_associated_with_item
-    assert_equal item.merchant_id, item.merchant.id
+    assert_equal item.merchant_id, item.merchant.id.to_s
   end
 
   def test_best_day_method_exists

@@ -139,7 +139,7 @@ class InvoiceTest < MiniTest::Unit::TestCase
   end
 
   def test_merchant_method_returns_merchant_with_id_equal_to_merchant_id_on_invoice
-    assert_equal inv.merchant_id, inv.merchant.id
+    assert_equal inv.merchant_id, inv.merchant.id.to_s
   end
 
   def test_revenue_per_invoice_method_exists

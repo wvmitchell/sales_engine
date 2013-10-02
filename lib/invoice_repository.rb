@@ -16,8 +16,10 @@ class InvoiceRepository < BaseRepository
     created_at = Time.now.utc.to_s
     updated_at = Time.now.utc.to_s
 
-    create_invoice(id, customer_id, merchant_id, status, created_at, updated_at)
+    invoice = create_invoice(id, customer_id, merchant_id, status, created_at, updated_at)
     create_invoice_items(id, data[:items])
+
+    invoice 
   end
 
   def create_invoice(id, customer_id, merchant_id, status, created_at, updated_at)
@@ -29,7 +31,9 @@ class InvoiceRepository < BaseRepository
     data[:created_at] = created_at
     data[:updated_at] = updated_at
     data[:sales_engine_reference] = sales_engine_reference
-    collection_array << Invoice.new(data)
+    inv = Invoice.new(data)
+    collection_array << inv
+    inv
   end
 
   def create_invoice_items(invoice_id, items)
