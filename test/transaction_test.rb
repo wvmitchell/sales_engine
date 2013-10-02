@@ -12,7 +12,7 @@ class TransactionTest < MiniTest::Unit::TestCase
     @se = SalesEngine.new
     se.startup
     data = {id: 1,
-	          invoice_id: 2,
+	          invoice_id: '2',
 	          credit_card_number: '4444',
 	          credit_card_expiration_date: "",
             result: "success",
@@ -32,7 +32,7 @@ class TransactionTest < MiniTest::Unit::TestCase
   end
 
   def test_invoice_id_is_set
-    assert_equal 2, t.invoice_id
+    assert_equal '2', t.invoice_id
   end
 
   def test_credit_card_number_is_set

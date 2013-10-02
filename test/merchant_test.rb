@@ -95,7 +95,7 @@ class MerchantTest < MiniTest::Unit::TestCase
     m.invoices.each do |invoice|
       total_revenue += invoice.revenue_per_invoice
     end
-    assert_equal BigDecimal(total_revenue)/100, m.revenue
+    assert_equal total_revenue, m.revenue
   end
 
   def test_invoices_for_date_does_return_invoices
@@ -112,7 +112,7 @@ class MerchantTest < MiniTest::Unit::TestCase
     m.invoices_for_date(Date.parse("2012-03-07 12:54:10 UTC")).each do |invoice|
       total_revenue += invoice.revenue_per_invoice
     end
-    assert_equal BigDecimal(total_revenue)/100, m.revenue(Date.parse("2012-03-07 12:54:10 UTC"))
+    assert_equal total_revenue, m.revenue(Date.parse("2012-03-07 12:54:10 UTC"))
   end
 
   def test_method_favorite_customer_exists

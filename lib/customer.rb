@@ -1,5 +1,6 @@
 require 'date'
 require_relative 'base_unit'
+require 'pry'
 
 class Customer < BaseUnit
 
@@ -21,7 +22,7 @@ class Customer < BaseUnit
 
   def favorite_merchant
     merchant_id = merchant_count.max_by { |merchant, count| count }.first
-    @favorite_merchant ||= sales_engine_reference.merchant_repository.find_by_id(merchant_id)
+    sales_engine_reference.merchant_repository.find_by_id(merchant_id)
   end
 
   def successful_invoices

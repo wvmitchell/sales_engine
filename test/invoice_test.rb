@@ -12,8 +12,8 @@ class InvoiceTest < MiniTest::Unit::TestCase
   def setup
     @se = SalesEngine.new
     se.startup
-    data =  { id: '1',
-    customer_id: '2',
+    data =  { id: 1,
+    customer_id: 2,
     merchant_id: '2',
     status: 'shipped',
     sales_engine_reference: se 
@@ -32,11 +32,11 @@ class InvoiceTest < MiniTest::Unit::TestCase
   end
 
   def test_id_is_set
-    assert_equal '1', inv.id 
+    assert_equal 1, inv.id 
   end
   
   def test_customer_id_is_set
-    assert_equal '2', inv.customer_id
+    assert_equal 2, inv.customer_id
   end
 
   def test_merchant_id_is_set
@@ -67,7 +67,7 @@ class InvoiceTest < MiniTest::Unit::TestCase
 
   def test_all_transactions_match_invoice_id
     inv.transactions.each do |transaction|
-      assert_equal inv.id, transaction.invoice_id
+      assert_equal inv.id, transaction.invoice_id.to_i 
     end
   end
 
@@ -91,7 +91,7 @@ class InvoiceTest < MiniTest::Unit::TestCase
 
   def test_method_invoice_items_match_invoice_id
     inv.invoice_items.each do |invoice_item|
-      assert_equal inv.id, invoice_item.invoice_id
+      assert_equal inv.id, invoice_item.invoice_id.to_i
     end
   end
 
@@ -147,7 +147,7 @@ class InvoiceTest < MiniTest::Unit::TestCase
   end
 
   def test_revenue_per_invoice_method_returns_fixnum
-    assert_kind_of Fixnum, inv.revenue_per_invoice
+    assert_kind_of BigDecimal, inv.revenue_per_invoice
   end
 
   def test_pending_method_exists

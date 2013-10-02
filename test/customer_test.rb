@@ -13,7 +13,7 @@ class CustomerTest < MiniTest::Unit::TestCase
     @se = SalesEngine.new
     se.startup
 
-    data =  { id: "1",
+    data =  { id: 1,
       first_name: "George",
       last_name: "Washington",
       sales_engine_reference: se 
@@ -26,7 +26,7 @@ class CustomerTest < MiniTest::Unit::TestCase
   end
 
   def test_it_responds_to_id
-    assert_equal "1", customer.id
+    assert_equal 1, customer.id
   end
 
   def test_it_responds_to_first_name
@@ -141,7 +141,7 @@ class CustomerTest < MiniTest::Unit::TestCase
 
   def test_merchant_count_returns_string_keys
     customer.merchant_count.each_key do |k|
-      assert_kind_of String, k
+      assert_kind_of Fixnum, k
     end
   end
 

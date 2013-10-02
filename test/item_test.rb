@@ -12,7 +12,7 @@ class ItemTest < MiniTest::Unit::TestCase
   def setup
     @se = SalesEngine.new
     se.startup
-    data = {id: '539',
+    data = {id: 539,
 	    name: "Rolen",
 	    description: "Awesome",
 	    unit_price: '100',
@@ -29,7 +29,7 @@ class ItemTest < MiniTest::Unit::TestCase
   end
 
   def test_id_is_set
-    assert_equal '539', item.id
+    assert_equal 539, item.id
   end
 
   def test_name_is_set
