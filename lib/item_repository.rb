@@ -21,6 +21,7 @@ class ItemRepository < BaseRepository
   end
 
   def sort_by_num_sold
-    collection_array.sort_by {|item| item.num_sold }.reverse
+    sorted = collection_array.sort_by {|item| item.num_sold }.reverse
+    sorted
   end
 end

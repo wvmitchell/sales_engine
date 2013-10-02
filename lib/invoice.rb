@@ -13,17 +13,17 @@ class Invoice < BaseUnit
   end
  
   def invoice_items
-    sales_engine_reference.invoice_item_repository.find_all_by_invoice_id(id)
+    @invoice_items ||= sales_engine_reference.invoice_item_repository.find_all_by_invoice_id(id)
   end
 
   def items
-    invoice_items.collect do |invoice_item|
+    @items ||= invoice_items.collect do |invoice_item|
       sales_engine_reference.item_repository.find_by_id(invoice_item.item_id)
     end
   end
 
   def customer
-    sales_engine_reference.customer_repository.find_by_id(customer_id)
+    @customer ||= sales_engine_reference.customer_repository.find_by_id(customer_id)
   end
 
   def invoice_items_ids
@@ -31,7 +31,7 @@ class Invoice < BaseUnit
   end
 
   def merchant
-    sales_engine_reference.merchant_repository.find_by_id(merchant_id)
+    @merchant ||= sales_engine_reference.merchant_repository.find_by_id(merchant_id)
   end
 
   def revenue_per_invoice
