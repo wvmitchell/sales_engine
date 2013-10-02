@@ -9,15 +9,16 @@ class InvoiceRepository < BaseRepository
   end
 
   def create(data={})
-    id = (collection_array.last.id.to_i + 1)
+    id = collection_array.last.id.to_i + 1
     customer_id = data[:customer].id
     merchant_id = data[:merchant].id
     status = data[:status]
     created_at = Time.now.utc.to_s
     updated_at = Time.now.utc.to_s
 
-    create_invoice(id, customer_id, merchant_id, status, created_at, updated_at)
+    invoice = create_invoice(id, customer_id, merchant_id, status, created_at, updated_at)
     create_invoice_items(id, data[:items])
+    return invoice
   end
 
   def create_invoice(id, customer_id, merchant_id, status, created_at, updated_at)
@@ -29,13 +30,16 @@ class InvoiceRepository < BaseRepository
     data[:created_at] = created_at
     data[:updated_at] = updated_at
     data[:sales_engine_reference] = sales_engine_reference
-    collection_array << Invoice.new(data)
+
+    new_invoice = Invoice.new(data)
+    collection_array << new_invoice
+    return new_invoice
   end
 
   def create_invoice_items(invoice_id, items)
-    invoice_items = sales_engine_reference.invoice_item_repository.collection_array
+    all_invoice_items = sales_engine_reference.invoice_item_repository.collection_array
     items.uniq.each_with_object({}) do |item, data|
-      data[:id] = (invoice_items.last.id.to_i + 1)
+      data[:id] = (all_invoice_items.last.id.to_i + 1)
       data[:item_id] = item.id
       data[:invoice_id] = invoice_id
       data[:quantity] = items.count(item)
@@ -44,7 +48,8 @@ class InvoiceRepository < BaseRepository
       data[:updated_at] = Time.now.utc.to_s
       data[:sales_engine_reference] = sales_engine_reference
       
-      invoice_items << InvoiceItem.new(data)
+      item = InvoiceItem.new(data)
+      all_invoice_items << item #InvoiceItem.new(data)
     end
   end
 end
